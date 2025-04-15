@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     // Create a container for each question
                     let questionContainer = document.createElement('div');
                     //give the container an id for styling purposes
-                    questionContainer.id = "question-container";
+                    questionContainer.classList.add = "question-container";
                 
                     // Create, give content and append to the mother
                     let quizzQsn = document.createElement('h2');
@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     let endQuizzButton =  document.createElement('button');
                     endQuizzButton.innerText = "End Quiz";
                     questionDiv.appendChild(endQuizzButton);
-                    endQuizzButton.id = 'endQuizzbutton'
+                    endQuizzButton.id = 'endQuizzButton'
 
                     endQuizzButton.addEventListener('click', () => {
                         let score = 0;
@@ -157,26 +157,29 @@ document.addEventListener("DOMContentLoaded", ()=>{
                          endQuizzButton.style.cursor = 'not-allowed';
                          endQuizzButton.style.opacity = '0.6';
 
-                        //create restart quizz button
-                         let restartQuizzButton =  document.createElement('button');
-                         restartQuizzButton.innerText = "Restart Quiz";
-                         questionDiv.appendChild(restartQuizzButton);
-                         restartQuizzButton.id = 'restartQuizzbutton'
-                        //add an event listener to the restart quizz button to clear out the html in the question div and fetch new questions
-                         restartQuizzButton.addEventListener('click', ()=>{
-                             questionDiv.innerHTML = '';
-
-                             button.click();
-                         }
-                            
-
-
-                         )
-
-
-
+                      
                         
-                        }) //end of event listner end quizz
+                        }) //endquizz event listener
+
+
+                          //create restart quizz button
+                          let restartQuizzButton =  document.createElement('button');
+                          restartQuizzButton.innerText = "Restart Quiz";
+                          questionDiv.appendChild(restartQuizzButton);
+                          restartQuizzButton.id = 'restartQuizzbutton'
+                         //add an event listener to the restart quizz button to clear out the html in the question div and fetch new questions
+                          restartQuizzButton.addEventListener('click', ()=>{
+                              questionDiv.innerHTML = '';
+                              triviaQuestions = []
+                              startQuizzButton.style.display = 'block';
+
+
+                              questionDiv.scrollIntoView({ behavior: "smooth" })
+
+                              
+ 
+         
+                         }) //end of restart quizz event listener
                             
             }) ;// end of second then data manipulation
         
