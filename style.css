@@ -1,0 +1,168 @@
+
+
+/* body{
+
+    background-color: #DCDCDC;
+
+} */
+
+#navSection{
+    margin-top: 5px;
+    background-color:  	 #f2f2f2;
+    text-transform: capitalize;
+    padding: 20px 0 !important;
+    font-size: 30x;
+    font-weight: 500;
+    color: #2e2e2e;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 0;
+    margin-right: 30px;
+    text-align: center;
+    width : 100%;
+}
+
+/* h1{
+    text-align: center;
+} */
+#imageSection{
+
+    margin-top: 5px;
+    background-color:  	white;
+    text-transform: capitalize;
+    padding: 20px 0 !important;
+    font-size: 30x;
+    font-weight: 500;
+    color: #2e2e2e;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 0;
+    margin-right: 30px;
+    text-align: center;
+}
+
+img{
+
+    width: 200px;
+    height: 200px;
+    /* position: absolute; */
+    left: 45%;
+    align-items: center;
+    
+
+}
+
+button{
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+font-size: 40px;
+color: white;
+border : none;
+border-radius: 30px;
+background-color: #4169E1;
+cursor: pointer;
+}
+#mainSection{
+
+    margin-top: 5px;
+    background-color:  	 #f2f2f2;
+    width: 100%;
+    text-transform: capitalize;
+    padding: 20px 0 !important;
+    font-size: 30x;
+    font-weight: 500;
+    color: #2e2e2e;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 0;
+    margin-right: 30px;
+    text-align: center;
+    flex-direction: column     ;
+}
+
+/* #questionsSection{
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    right: 20%
+} */
+
+#question-container
+{
+    margin-top: 5px;
+    background-color:  	 #f2f2f2;
+    width: 100%;
+    text-transform: capitalize;
+    padding: 20px 0 !important;
+    font-size: 30x;
+    font-weight: 500;
+    color: #2e2e2e;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 0;
+    margin-right: 30px;
+    text-align: center;
+}
+
+.correct-feedback::before {
+    content: "😊";
+    padding: 3px;
+  }
+  
+  
+.wrong-feedback::before{
+    content: "😔";
+    padding: 3px;
+
+}
+
+.correct-feedback
+{
+    background-color: green;
+    color: white;
+    display: inline-block;
+    padding: 5px;
+  
+    
+}
+
+.correct-feedback-quizz-end{
+    background-color: green;
+    color: white;
+    display: inline-block;
+    padding: 5px;
+
+}
+
+
+.wrong-feedback
+{
+ background-color: red;
+ color: white;
+ display: inline-block;
+ padding: 5px;
+
+}
+
+#startQuizzButton{
+
+    background-color: maroon;
+    padding: 10px 20px;
+}
+
+#endQuizzbutton{
+
+
+    background-color: green;
+    color: white;
+    font-size: 20px;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px; /* Add space between the button and the last question */
+    /* display: block;  */
+}
+
+#restartQuizzbutton{
+
+    background-color: red;
+}
