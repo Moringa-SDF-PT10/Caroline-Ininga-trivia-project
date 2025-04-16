@@ -8,12 +8,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //grab some existing dom elements
     const navDiv = document.getElementById('navSection');
-    const questionDiv = document.getElementById("questionsSection");
     const startButtonDiv = document.getElementById("startButtonSection");
+    const questionDiv = document.getElementById("questionsSection");
+    const userOptionsDiv = document.getElementById("userOptions");
+   
 
     //create my heading title
     let title = document.createElement("h1");
-    title.innerText = "Your ultimate Trivia Game App";
+    title.innerText = "You are about to play, the ultimate Trivia Game";
     navDiv.appendChild(title);
 
 
@@ -37,6 +39,65 @@ document.addEventListener("DOMContentLoaded", () => {
             loadQuiz();
         });
         
+        //no of questions selection selection option
+        const noOfQuestions = document.createElement('select');
+        noOfQuestions.id = "noOfQsns";
+        userOptionsDiv.appendChild(noOfQuestions);
+        const noOfQsn = [5,10,15,20,25];
+
+        noOfQsn.forEach((num) =>{
+            const opt = document.createElement('option');
+            opt.value = num;
+            opt.innerText = `${num} questions`;
+            noOfQuestions.appendChild(opt);
+
+        })
+
+        //difficulty level selection option
+        const difficultyLevel = document.createElement('select');
+         userOptionsDiv.appendChild(difficultyLevel);
+         difficultyLevel.id = "diffLevel";
+
+         difficulL = ["easy", "hard", "medium"]
+         difficulL.forEach((dif)=>{
+            let diffL = document.createElement("option");
+            diffL.value = dif;
+            diffL.innerText = `${dif}`;
+            difficultyLevel.appendChild(diffL)
+
+         })
+
+         //category of questions user selection
+         const category = document.createElement('select');
+         userOptionsDiv.append(category);
+         category.id = "cat";
+      
+        const categories = [{ 
+            18 : "Computers"},
+            {
+             10: "Books"
+            },
+            {
+                22: "Geography"
+            },
+            {
+                9: "General-Knowledge"
+            },
+            {
+                19: "Mathematics"
+            }
+
+        ]
+
+        categories.forEach((cat)=>
+        {
+            let opt3 = document.createElement("option");
+            opt3.value = cat.key;
+            opt3.innerText = `${cat.key}`;
+            category.appendChild(opt3);
+        })
+        
+
 
 
 
@@ -44,7 +105,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function loadQuiz() {
         questionDiv.innerHTML = ''; // Clear previous questions, score, buttons
-        fetch("https://opentdb.com/api.php?amount=10&category=18")
+
+        //grab the selected user options
+
+        const amount = document.getElementById("noOfQsns").value;
+        const dLevel = document.getElementById("diffLevel").value;
+        // const cat = document.getElementById("cat").value;
+
+
+        fetch(`https://opentdb.com/api.php?amount=${amount}&category=9&difficulty=${dLevel}`)
             .then(response => response.json())
             .then(data => {
                 triviaQuestions = data.results;
@@ -52,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
                    // Create a container for each question
                    let questionContainer = document.createElement('div');
                    //give the container an id for styling purposes
-                   questionContainer.classList.add = "question-container";
+                   questionContainer.classList.add("question-container");
                
                    // Create, give content and append to the mother
                    let quizzQsn = document.createElement('h2');
