@@ -1,196 +1,202 @@
-document.addEventListener("DOMContentLoaded", ()=>{
+document.addEventListener("DOMContentLoaded", () => {
 
-    //create header image section
-    let imageBox = document.getElementById("imageSection");
-    let img = document.createElement("img");
-    img.src = ("./assets/quizztime.png")
-    imageBox.appendChild(img)
+    //create a image for the header section and append it to the image div 
+    const imageBox = document.getElementById("imageSection");
+    const img = document.createElement("img");
+    img.src = "./assets/quizztime.png";
+    imageBox.appendChild(img);
+
+    //grab some existing dom elements
+    const navDiv = document.getElementById('navSection');
+    const questionDiv = document.getElementById("questionsSection");
+    const startButtonDiv = document.getElementById("startButtonSection");
+
+    //create my heading title
+    let title = document.createElement("h1");
+    title.innerText = "Your ultimate Trivia Game App";
+    navDiv.appendChild(title);
 
 
 
 
-    //grab existing element
-    let mainDiv = document.getElementById('mainSection');
-    let questionDiv = document.getElementById("questionsSection");
+
+    //define this variable here as a global variable so that it can be accessible thoughout the code
+    let triviaQuestions = [];
 
 
-    //create start quizz button and append to existing html tag(parent)
-    const startQuizzButton = document.createElement('button');
-    startQuizzButton.innerText ="Start Quiz";
-    startQuizzButton.id = 'startQuizzButton';
-    mainDiv.appendChild(startQuizzButton);
+    //create the start quizz buttton
+  
+        const startBtn = document.createElement('button');
+        startBtn.innerText = "Start Quiz";
+        startBtn.id = 'startQuizzButton';
+        startButtonDiv.appendChild(startBtn);
+    
+        startBtn.addEventListener('click', () => {
+            questionDiv.style.display = "block";
+            startBtn.style.display = 'none';
+            loadQuiz();
+        });
+        
 
-    //add event listener on click of the start quizz button
-    startQuizzButton.addEventListener('click', ()=>
 
-        {
-          startQuizzButton.style.display = 'none';
+
+        //create the load quizz function
+
+    function loadQuiz() {
+        questionDiv.innerHTML = ''; // Clear previous questions, score, buttons
         fetch("https://opentdb.com/api.php?amount=10&category=18")
-            .then((Response) => Response.json())
-            .then((data)=> {
+            .then(response => response.json())
+            .then(data => {
+                triviaQuestions = data.results;
+                triviaQuestions.forEach((element, index) => {
+                   // Create a container for each question
+                   let questionContainer = document.createElement('div');
+                   //give the container an id for styling purposes
+                   questionContainer.classList.add = "question-container";
+               
+                   // Create, give content and append to the mother
+                   let quizzQsn = document.createElement('h2');
+                   quizzQsn.innerText = element.question;
+                   questionContainer.appendChild(quizzQsn);
+                   questionDiv.appendChild(questionContainer);
+               
+                   // Combine correct and incorrect answers for each question
+                   //spread operator gives us a copy for the original array and then we add the correct answer to the array
+                   //we need to work with all answers both wrong and right as one
+                   let allAnswersCombined = [...element.incorrect_answers, element.correct_answer];
+               
+                   // array.short()sorts in alphabetical order but adding the random callback sorts in any order
+                   allAnswersCombined.sort(() => Math.random() - 0.5);
+                           // Create and append answer choices
+                           allAnswersCombined.forEach(answer => {
+                           let label = document.createElement('label');
+                           let input = document.createElement('input');
+                           input.type = 'radio'; //input type is radio
+                           input.name = `question-${index}`; // give the answers an unique name .. in this case the index of the question
+                           input.value = answer;
 
-                    //access the inner array from the outside object
-                    triviaQuestions = data.results; 
+                           label.appendChild(input);
+                           label.appendChild(document.createTextNode(answer));
+                           questionContainer.appendChild(label);
+                           questionContainer.appendChild(document.createElement('br')); // Line break for better formatting
 
-                    triviaQuestions.forEach((element, index) => {
-                    // Create a container for each question
-                    let questionContainer = document.createElement('div');
-                    //give the container an id for styling purposes
-                    questionContainer.classList.add = "question-container";
-                
-                    // Create, give content and append to the mother
-                    let quizzQsn = document.createElement('h2');
-                    quizzQsn.innerText = element.question;
-                    questionContainer.appendChild(quizzQsn);
-                    questionDiv.appendChild(questionContainer);
-                
-                    // Combine correct and incorrect answers for each question
-                    //spread operator gives us a copy for the original array and then we add the correct answer to the array
-                    //we need to work with all answers both wrong and right as one
-                    let allAnswersCombined = [...element.incorrect_answers, element.correct_answer];
-                
-                    // array.short()sorts in alphabetical order but adding the random callback sorts in any order
-                    allAnswersCombined.sort(() => Math.random() - 0.5);
-                            // Create and append answer choices
-                            allAnswersCombined.forEach(answer => {
-                            let label = document.createElement('label');
-                            let input = document.createElement('input');
-                            input.type = 'radio'; //input type is radio
-                            input.name = `question-${index}`; // give the answers an unique name .. in this case the index of the question
-                            input.value = answer;
+                                     // Add event listener to check if the answer is correct
+                                           input.addEventListener('change', () => {
+                                               // Remove any existing feedback for this question
+                                               const existingFeedback = questionContainer.querySelector('.feedback');
+                                               if (existingFeedback) {
+                                                   existingFeedback.remove();
+                                               }
+                                           
+                                               // Create a new feedback element
+                                               const scoreforQn = document.createElement('h2');
+                                               
+                                           
+                                               if (input.value === element.correct_answer) {
+                                                   scoreforQn.innerText = `Correct! You got it right`;
+                                                   scoreforQn.classList.add('correct-feedback');
+                                               } else {
+                                                   scoreforQn.innerText = `Wrong! You got it Wrong`;
+                                                   scoreforQn.classList.add('wrong-feedback');
+                                               }
+                                           
+                                               // Append the new feedback to the question container
+                                               questionContainer.appendChild(scoreforQn);
 
-                            label.appendChild(input);
-                            label.appendChild(document.createTextNode(answer));
-                            questionContainer.appendChild(label);
-                            questionContainer.appendChild(document.createElement('br')); // Line break for better formatting
+                                               //disable all radio buttons when the user has selected thier answer for the question
+                                               const allAnswers = document.querySelectorAll(`input[name="question-${index}"]`)
+                                               allAnswers.forEach((answer)=>
+                                               {
+                                                   answer.disabled = true;
+                                               })
 
-                                      // Add event listener to check if the answer is correct
-                                            input.addEventListener('change', () => {
-                                                // Remove any existing feedback for this question
-                                                const existingFeedback = questionContainer.querySelector('.feedback');
-                                                if (existingFeedback) {
-                                                    existingFeedback.remove();
-                                                }
-                                            
-                                                // Create a new feedback element
-                                                const scoreforQn = document.createElement('h2');
-                                                
-                                            
-                                                if (input.value === element.correct_answer) {
-                                                    scoreforQn.innerText = `Correct! You got it right`;
-                                                    scoreforQn.classList.add('correct-feedback');
-                                                } else {
-                                                    scoreforQn.innerText = `Wrong! You got it Wrong`;
-                                                    scoreforQn.classList.add('wrong-feedback');
-                                                }
-                                            
-                                                // Append the new feedback to the question container
-                                                questionContainer.appendChild(scoreforQn);
-
-                                                //disable all radio buttons when the user has selected thier answer for the question
-                                                const allAnswers = document.querySelectorAll(`input[name="question-${index}"]`)
-                                                allAnswers.forEach((answer)=>
-                                                {
-                                                    answer.disabled = true;
-                                                })
-
-                                            });  //end of change event listener
-                                            
-
-
-                           
-
-                           
-
+                                           });  //end of change event listener
+                                           
 
 
                           
 
-
-                            
-                            }); //end of allanswerscombined for each
+                          
 
 
-                            
+
+                         
 
 
-   
-                    }); //end of trivaquestions for each loop
-
-                    let endQuizzButton =  document.createElement('button');
-                    endQuizzButton.innerText = "End Quiz";
-                    questionDiv.appendChild(endQuizzButton);
-                    endQuizzButton.id = 'endQuizzButton'
-
-                    endQuizzButton.addEventListener('click', () => {
-                        let score = 0;
-                        
-                        triviaQuestions.forEach((element, index) => {
-
-                        const checkedAnswer = document.querySelector(`input[name = "question-${index}"]:checked`);
-                        if(checkedAnswer && checkedAnswer.value === element.correct_answer){
-                            score++;} 
-                         else{
-                            const allAnswers = document.querySelectorAll(`input[name="question-${index}"]`);
-                            allAnswers.forEach(answerInput => {
-                                if (answerInput.value === element.correct_answer) {
-                                    const correctLabel = answerInput.parentElement; 
-                                    correctLabel.classList.add('correct-feedback-quizz-end'); 
-                                }
-                            });
+                           
+                           }); //end of allanswerscombined for each
 
 
-                         }
-                     
-                    
-                    
-                        
-                        } )
-
-                        //display the user's score on the scoreboard
-                        let scoreBoard =  document.createElement("h2");
-                        scoreBoard.innerText =  `Your score : ${score}`
-                        questionDiv.appendChild(scoreBoard)
-                        
-                        //disable the end quizz button after the user has clicked in once   
-                         endQuizzButton.disabled = true;
-                         endQuizzButton.style.cursor = 'not-allowed';
-                         endQuizzButton.style.opacity = '0.6';
-
-                      
-                        
-                        }) //endquizz event listener
+                           
 
 
-                          //create restart quizz button
-                          let restartQuizzButton =  document.createElement('button');
-                          restartQuizzButton.innerText = "Restart Quiz";
-                          questionDiv.appendChild(restartQuizzButton);
-                          restartQuizzButton.id = 'restartQuizzbutton'
-                         //add an event listener to the restart quizz button to clear out the html in the question div and fetch new questions
-                          restartQuizzButton.addEventListener('click', ()=>{
-                              questionDiv.innerHTML = '';
-                              triviaQuestions = []
-                              startQuizzButton.style.display = 'block';
+                });
+
+                createEndButton();
+                createRestartButton();
+            });
+    } //end of loadquizz function
 
 
-                              questionDiv.scrollIntoView({ behavior: "smooth" })
-
-                              
- 
-         
-                         }) //end of restart quizz event listener
-                            
-            }) ;// end of second then data manipulation
-        
-       
-    }); //end of click of start quizz button event listener
-
-}); //end of content loaded event lister
 
 
-    
-    
-    
-    
-    
+
+//create the end quizz button
+
+    function createEndButton() {
+        const endBtn = document.createElement("button");
+        endBtn.innerText = "End Quiz";
+        endBtn.id = "endQuizButton";
+        questionDiv.appendChild(endBtn);
+
+        endBtn.addEventListener("click", () => {
+            let score = 0;
+
+            triviaQuestions.forEach((element, index) => {
+                const checkedAnswer = document.querySelector(`input[name="question-${index}"]:checked`);
+                if (checkedAnswer && checkedAnswer.value === element.correct_answer) {
+                    score++;
+                } else {
+                    const allAnswers = document.querySelectorAll(`input[name="question-${index}"]`);
+                    allAnswers.forEach(input => {
+                        if (input.value === element.correct_answer) {
+                            input.parentElement.classList.add('correct-feedback-quizz-end');
+                        }
+                    });
+                }
+            });
+
+            const scoreBoard = document.createElement("h2");
+            scoreBoard.innerText = `Your score: ${score}`;
+            questionDiv.appendChild(scoreBoard);
+
+            endBtn.disabled = true;
+            endBtn.style.cursor = 'not-allowed';
+            endBtn.style.opacity = '0.6';
+        });
+    }
+
+
+
+
+    //create the restart quizz function
+
+    function createRestartButton() {
+        const restartBtn = document.createElement("button");
+        restartBtn.innerText = "Restart Quiz";
+        restartBtn.id = "restartQuizButton";
+        questionDiv.appendChild(restartBtn);
+
+        restartBtn.addEventListener("click", () => {
+            triviaQuestions = [];
+            loadQuiz(); 
+        });
+    }
+
+
+
+
+
+
+
+}); //end of dom content loaded
