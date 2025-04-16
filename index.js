@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const navDiv = document.getElementById('navSection');
     const startButtonDiv = document.getElementById("startButtonSection");
     const questionDiv = document.getElementById("questionsSection");
+    const choose = document.getElementById("choosePreferences");
     const userOptionsDiv = document.getElementById("userOptions");
    
 
@@ -19,11 +20,14 @@ document.addEventListener("DOMContentLoaded", () => {
     navDiv.appendChild(title);
 
 
-
-
-
     //define this variable here as a global variable so that it can be accessible thoughout the code
     let triviaQuestions = [];
+
+
+    //section to introduce option selection
+    let statement = document.createElement("h2");
+    choose.append(statement);
+    statement.innerText = "Choose your Trivia Preferences below ... and start your quizz"
 
 
     //create the start quizz buttton
@@ -36,6 +40,9 @@ document.addEventListener("DOMContentLoaded", () => {
         startBtn.addEventListener('click', () => {
             questionDiv.style.display = "block";
             startBtn.style.display = 'none';
+            choose.style.display = 'none';
+            userOptionsDiv.style.display = 'none';
+
             loadQuiz();
         });
         
@@ -58,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
          userOptionsDiv.appendChild(difficultyLevel);
          difficultyLevel.id = "diffLevel";
 
-         difficulL = ["easy", "hard", "medium"]
+         const difficulL = ["easy", "hard", "medium"]
          difficulL.forEach((dif)=>{
             let diffL = document.createElement("option");
             diffL.value = dif;
@@ -85,18 +92,56 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             {
                 19: "Mathematics"
+            },{
+                15: "Video Games"
+            },
+            {
+                11: "Films"
+            },
+            {
+                17: "Science & Nature"
+            },
+            {
+                21: "Sports"
+            },
+            {
+                28: "Vehicles"
+            },{
+                27: "Animals"
+            },
+            {
+                26: "Celebrities"
+            },
+            {
+                12: "Music"
             }
 
         ]
 
         categories.forEach((cat)=>
         {
+            const [key, value] = Object.entries(cat)[0]; 
             let opt3 = document.createElement("option");
-            opt3.value = cat.key;
-            opt3.innerText = `${cat.key}`;
+            opt3.value = key; 
+            opt3.innerText = value; 
             category.appendChild(opt3);
         })
         
+        //type of questions user selection
+
+        let type = document.createElement("select");
+        userOptionsDiv.appendChild(type);
+        type.id = 'type';
+
+        const typeOptions = ["multiple", "boolean"]
+        typeOptions.forEach((typ)=>{
+            let opt4 = document.createElement("option");
+            opt4.value = typ;
+            opt4.innerText = `${typ}`
+            type.appendChild(opt4)
+
+        })
+
 
 
 
@@ -110,10 +155,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const amount = document.getElementById("noOfQsns").value;
         const dLevel = document.getElementById("diffLevel").value;
-        // const cat = document.getElementById("cat").value;
+        const cat = document.getElementById("cat").value;
+        const typeOfQns = document.getElementById("type").value;
 
 
-        fetch(`https://opentdb.com/api.php?amount=${amount}&category=9&difficulty=${dLevel}`)
+        fetch(`https://opentdb.com/api.php?amount=${amount}&category=${cat}&difficulty=${dLevel}&type=${typeOfQns}`)
             .then(response => response.json())
             .then(data => {
                 triviaQuestions = data.results;
@@ -236,7 +282,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             const scoreBoard = document.createElement("h2");
-            scoreBoard.innerText = `Your score: ${score}`;
+            const percentage = ((score/triviaQuestions.length) * 100).toFixed(2);
+            scoreBoard.innerText = `Your score is: ${score} / ${triviaQuestions.length} (${percentage}%)`;
             questionDiv.appendChild(scoreBoard);
 
             endBtn.disabled = true;

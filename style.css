@@ -39,6 +39,63 @@ img{
     
 
 }
+
+#choosePreferences{
+
+    margin-top: 5px;
+    background-color:    #f2f2f2;
+    text-transform: capitalize;
+    padding: 20px 0 !important;
+    font-size: 30x;
+    font-weight: 500;
+    color: #2e2e2e;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 0;
+    margin-right: 30px;
+    text-align: center;
+    width : 100%;
+
+
+
+}
+
+#userOptions {
+    display: flex; /* Use flexbox for layout */
+    font-family: 'Roboto', sans-serif;
+    align-items: center; 
+    justify-content: center; 
+    gap: 15px; /* Add spacing between dropdowns */
+    padding: 20px; /* Add padding inside the div */
+    margin: 20px auto; /* Center the div horizontally */
+    width: 100%; /* Set the width of the div */
+    max-width: 1800px; /* Limit the maximum width */
+    background-color: #f9f9f9; /* Light background color */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 10px; /* Round the corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+#userOptions select {
+    width: 90%; /* Make the dropdowns take up most of the width */
+    max-width: 600px; /* Limit the maximum width for responsiveness */
+    padding: 10px; /* Add padding inside the dropdowns */
+    font-size: 16px; /* Increase font size for readability */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 5px; /* Round the corners */
+    background-color: #fff; /* White background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    cursor: pointer; /* Add a pointer cursor */
+  
+}
+
+#userOptions select:focus {
+    outline: none; /* Remove the default focus outline */
+    border-color: blue; /* Highlight the border on focus */
+    box-shadow: 0 0 5px rgba(0, 0, 255, 0.5); /* Add a blue glow */
+}
+
+
+
 #startButtonSection{
     display: flex; 
     justify-content: center; 
@@ -49,6 +106,8 @@ img{
 
 
 }
+
+
 
 #questionsSection {
      display: flex;
@@ -81,7 +140,7 @@ img{
 
 .correct-feedback
 {
-    background-color: green;
+    background-color: #32CD32;
     color: white;
     display: inline-block;
     padding: 5px;
@@ -91,7 +150,7 @@ img{
 
 .wrong-feedback
 {
- background-color: red;
+ background-color: #FF6347;
  color: white;
  display: inline-block;
  padding: 5px;
@@ -99,7 +158,7 @@ img{
 }
 
 .correct-feedback-quizz-end{
-    background-color: green;
+    background-color: #32CD32; 
     color: white;
     display: inline-block;
     padding: 5px;
@@ -113,16 +172,21 @@ img{
 
  #startQuizzButton{
 
-    background-color: blue;
+    background-color: #4a90e2;
     color: white;
     font-size: 30px;
     border: none;
     border-radius: 30px;
-    padding: 25px 50px;
+    padding: 10px 150px;
     margin-top: 20px; 
     left : 500px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 
 } 
+#startQuizzButton:hover {
+    background-color: #357ab8; /* Slightly darker blue on hover */
+    transform: scale(1.05); /* Slightly enlarge the button */
+}
 
 #endQuizButton{
 
