@@ -125,6 +125,42 @@ img{
 }
 
 
+.correct-answer {
+    position: relative;
+    padding-left: 30px; 
+    color: white; 
+    font-weight: bold; 
+    background-color: #32CD32;
+    width: 300px;
+}
+
+.correct-answer::before {
+    content: '✔'; 
+    position: absolute;
+    left: 5px; 
+    color: white; 
+    font-size: 18px; 
+    font-weight: bold;
+    
+}
+
+.wrong-answer {
+    position: relative;
+    padding-left: 30px; 
+    color: white; 
+    font-weight: bold; 
+    background-color: #FF6347; 
+    width: 300px; 
+}
+
+.wrong-answer::before {
+    content: '✖'; 
+    position: absolute;
+    left: 5px; 
+    color: white; 
+    font-size: 18px; 
+    font-weight: bold;
+}
 
 .correct-feedback::before {
     content: "😊";
@@ -140,8 +176,8 @@ img{
 
 .correct-feedback
 {
-    background-color: #32CD32;
-    color: white;
+    
+    color: #32CD32;
     display: inline-block;
     padding: 5px;
   
@@ -150,8 +186,8 @@ img{
 
 .wrong-feedback
 {
- background-color: #FF6347;
- color: white;
+
+ color: #FF6347;
  display: inline-block;
  padding: 5px;
 

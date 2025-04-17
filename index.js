@@ -168,10 +168,18 @@ document.addEventListener("DOMContentLoaded", () => {
                    let questionContainer = document.createElement('div');
                    //give the container an id for styling purposes
                    questionContainer.classList.add("question-container");
+
+
+                   //decoding 
+                   function decodeHTML(html) {
+                    const txt = document.createElement("textarea");
+                    txt.innerHTML = html;
+                    return txt.value;
+                }
                
                    // Create, give content and append to the mother
                    let quizzQsn = document.createElement('h2');
-                   quizzQsn.innerText = element.question;
+                   quizzQsn.innerText = `${index + 1}. ${decodeHTML(element.question)}`;
                    questionContainer.appendChild(quizzQsn);
                    questionDiv.appendChild(questionContainer);
                
@@ -189,6 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
                            input.type = 'radio'; //input type is radio
                            input.name = `question-${index}`; // give the answers an unique name .. in this case the index of the question
                            input.value = answer;
+                           label.id = "labelS"
 
                            label.appendChild(input);
                            label.appendChild(document.createTextNode(answer));
@@ -205,14 +214,31 @@ document.addEventListener("DOMContentLoaded", () => {
                                            
                                                // Create a new feedback element
                                                const scoreforQn = document.createElement('h2');
+                                               let score = 0;
                                                
                                            
                                                if (input.value === element.correct_answer) {
+                                                  
                                                    scoreforQn.innerText = `Correct! You got it right`;
                                                    scoreforQn.classList.add('correct-feedback');
+                                                   label.classList.add('correct-answer');
                                                } else {
                                                    scoreforQn.innerText = `Wrong! You got it Wrong`;
                                                    scoreforQn.classList.add('wrong-feedback');
+                                                   label.classList.add('wrong-answer');
+
+                                                 
+                                                   
+                                                    // Automatically highlight the correct answer
+                                                    const allAnswers = document.querySelectorAll(`input[name="question-${index}"]`);
+                                                    allAnswers.forEach(answer => {
+                                                        if (answer.value === element.correct_answer) {
+                                                            answer.parentElement.classList.add('correct-answer'); // Highlight the correct answer
+                                                        }
+                                                    });
+                                                    
+                                                   
+                                                   
                                                }
                                            
                                                // Append the new feedback to the question container
@@ -265,21 +291,16 @@ document.addEventListener("DOMContentLoaded", () => {
         questionDiv.appendChild(endBtn);
 
         endBtn.addEventListener("click", () => {
-            let score = 0;
+            let score = 0
+            
+             // Iterate through all questions to calculate the score
+                triviaQuestions.forEach((element, index) => {
+                    const selectedAnswer = document.querySelector(`input[name="question-${index}"]:checked`);
+                    if (selectedAnswer && selectedAnswer.value === element.correct_answer) {
+                        score++; 
+                    }
+                });
 
-            triviaQuestions.forEach((element, index) => {
-                const checkedAnswer = document.querySelector(`input[name="question-${index}"]:checked`);
-                if (checkedAnswer && checkedAnswer.value === element.correct_answer) {
-                    score++;
-                } else {
-                    const allAnswers = document.querySelectorAll(`input[name="question-${index}"]`);
-                    allAnswers.forEach(input => {
-                        if (input.value === element.correct_answer) {
-                            input.parentElement.classList.add('correct-feedback-quizz-end');
-                        }
-                    });
-                }
-            });
 
             const scoreBoard = document.createElement("h2");
             const percentage = ((score/triviaQuestions.length) * 100).toFixed(2);
