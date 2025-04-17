@@ -1,5 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+        let triviaQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+
+
     //create a image for the header section and append it to the image div 
     const imageBox = document.getElementById("imageSection");
     const img = document.createElement("img");
@@ -20,14 +26,114 @@ document.addEventListener("DOMContentLoaded", () => {
     navDiv.appendChild(title);
 
 
-    //define this variable here as a global variable so that it can be accessible thoughout the code
-    let triviaQuestions = [];
-
-
     //section to introduce option selection
     let statement = document.createElement("h2");
     choose.append(statement);
     statement.innerText = "Choose your Trivia Preferences below ... and start your quizz"
+
+
+    //no of questions selection selection option
+    const noOfQuestions = document.createElement('select');
+    noOfQuestions.id = "noOfQsns";
+    userOptionsDiv.appendChild(noOfQuestions);
+    const noOfQsn = [5,10,15,20,25];
+
+    noOfQsn.forEach((num) =>{
+        const opt = document.createElement('option');
+        opt.value = num;
+        opt.innerText = `${num} questions`;
+        noOfQuestions.appendChild(opt);
+
+    })
+
+    //difficulty level selection option
+    const difficultyLevel = document.createElement('select');
+     userOptionsDiv.appendChild(difficultyLevel);
+     difficultyLevel.id = "diffLevel";
+
+     const difficulL = ["easy", "hard", "medium"]
+     difficulL.forEach((dif)=>{
+        let diffL = document.createElement("option");
+        diffL.value = dif;
+        diffL.innerText = `${dif}`;
+        difficultyLevel.appendChild(diffL)
+
+     })
+
+     //category of questions user selection
+     const category = document.createElement('select');
+     userOptionsDiv.append(category);
+     category.id = "cat";
+  
+    const categories = [{ 
+        18 : "Computers"},
+        {
+         10: "Books"
+        },
+        {
+            22: "Geography"
+        },
+        {
+            9: "General-Knowledge"
+        },
+        {
+            19: "Mathematics"
+        },{
+            15: "Video Games"
+        },
+        {
+            11: "Films"
+        },
+        {
+            17: "Science & Nature"
+        },
+        {
+            21: "Sports"
+        },
+        {
+            28: "Vehicles"
+        },{
+            27: "Animals"
+        },
+        {
+            26: "Celebrities"
+        },
+        {
+            12: "Music"
+        }
+
+    ]
+
+    categories.forEach((cat)=>
+    {
+        const [key, value] = Object.entries(cat)[0]; 
+        let opt3 = document.createElement("option");
+        opt3.value = key; 
+        opt3.innerText = value; 
+        category.appendChild(opt3);
+    })
+    
+    //type of questions user selection
+
+    let type = document.createElement("select");
+    userOptionsDiv.appendChild(type);
+    type.id = 'type';
+
+    const typeOptions = ["multiple", "boolean"]
+    typeOptions.forEach((typ)=>{
+        let opt4 = document.createElement("option");
+        opt4.value = typ;
+        opt4.innerText = `${typ}`
+        type.appendChild(opt4)
+
+    })
+
+
+
+
+
+
+
 
 
     //create the start quizz buttton
@@ -38,6 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
         startButtonDiv.appendChild(startBtn);
     
         startBtn.addEventListener('click', () => {
+            startTime = new Date();
             questionDiv.style.display = "block";
             startBtn.style.display = 'none';
             choose.style.display = 'none';
@@ -46,111 +153,17 @@ document.addEventListener("DOMContentLoaded", () => {
             loadQuiz();
         });
         
-        //no of questions selection selection option
-        const noOfQuestions = document.createElement('select');
-        noOfQuestions.id = "noOfQsns";
-        userOptionsDiv.appendChild(noOfQuestions);
-        const noOfQsn = [5,10,15,20,25];
-
-        noOfQsn.forEach((num) =>{
-            const opt = document.createElement('option');
-            opt.value = num;
-            opt.innerText = `${num} questions`;
-            noOfQuestions.appendChild(opt);
-
-        })
-
-        //difficulty level selection option
-        const difficultyLevel = document.createElement('select');
-         userOptionsDiv.appendChild(difficultyLevel);
-         difficultyLevel.id = "diffLevel";
-
-         const difficulL = ["easy", "hard", "medium"]
-         difficulL.forEach((dif)=>{
-            let diffL = document.createElement("option");
-            diffL.value = dif;
-            diffL.innerText = `${dif}`;
-            difficultyLevel.appendChild(diffL)
-
-         })
-
-         //category of questions user selection
-         const category = document.createElement('select');
-         userOptionsDiv.append(category);
-         category.id = "cat";
-      
-        const categories = [{ 
-            18 : "Computers"},
-            {
-             10: "Books"
-            },
-            {
-                22: "Geography"
-            },
-            {
-                9: "General-Knowledge"
-            },
-            {
-                19: "Mathematics"
-            },{
-                15: "Video Games"
-            },
-            {
-                11: "Films"
-            },
-            {
-                17: "Science & Nature"
-            },
-            {
-                21: "Sports"
-            },
-            {
-                28: "Vehicles"
-            },{
-                27: "Animals"
-            },
-            {
-                26: "Celebrities"
-            },
-            {
-                12: "Music"
-            }
-
-        ]
-
-        categories.forEach((cat)=>
-        {
-            const [key, value] = Object.entries(cat)[0]; 
-            let opt3 = document.createElement("option");
-            opt3.value = key; 
-            opt3.innerText = value; 
-            category.appendChild(opt3);
-        })
         
-        //type of questions user selection
-
-        let type = document.createElement("select");
-        userOptionsDiv.appendChild(type);
-        type.id = 'type';
-
-        const typeOptions = ["multiple", "boolean"]
-        typeOptions.forEach((typ)=>{
-            let opt4 = document.createElement("option");
-            opt4.value = typ;
-            opt4.innerText = `${typ}`
-            type.appendChild(opt4)
-
-        })
 
 
 
 
 
-        //create the load quizz function
+//create the load quizz function
 
     function loadQuiz() {
-        questionDiv.innerHTML = ''; // Clear previous questions, score, buttons
-
+       
+        questionDiv.innerHTML = ''; 
         //grab the selected user options
 
         const amount = document.getElementById("noOfQsns").value;
@@ -163,116 +176,8 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(response => response.json())
             .then(data => {
                 triviaQuestions = data.results;
-                triviaQuestions.forEach((element, index) => {
-                   // Create a container for each question
-                   let questionContainer = document.createElement('div');
-                   //give the container an id for styling purposes
-                   questionContainer.classList.add("question-container");
-
-
-                   //decoding 
-                   function decodeHTML(html) {
-                    const txt = document.createElement("textarea");
-                    txt.innerHTML = html;
-                    return txt.value;
-                }
-               
-                   // Create, give content and append to the mother
-                   let quizzQsn = document.createElement('h2');
-                   quizzQsn.innerText = `${index + 1}. ${decodeHTML(element.question)}`;
-                   questionContainer.appendChild(quizzQsn);
-                   questionDiv.appendChild(questionContainer);
-               
-                   // Combine correct and incorrect answers for each question
-                   //spread operator gives us a copy for the original array and then we add the correct answer to the array
-                   //we need to work with all answers both wrong and right as one
-                   let allAnswersCombined = [...element.incorrect_answers, element.correct_answer];
-               
-                   // array.short()sorts in alphabetical order but adding the random callback sorts in any order
-                   allAnswersCombined.sort(() => Math.random() - 0.5);
-                           // Create and append answer choices
-                           allAnswersCombined.forEach(answer => {
-                           let label = document.createElement('label');
-                           let input = document.createElement('input');
-                           input.type = 'radio'; //input type is radio
-                           input.name = `question-${index}`; // give the answers an unique name .. in this case the index of the question
-                           input.value = answer;
-                           label.id = "labelS"
-
-                           label.appendChild(input);
-                           label.appendChild(document.createTextNode(answer));
-                           questionContainer.appendChild(label);
-                           questionContainer.appendChild(document.createElement('br')); // Line break for better formatting
-
-                                     // Add event listener to check if the answer is correct
-                                           input.addEventListener('change', () => {
-                                               // Remove any existing feedback for this question
-                                               const existingFeedback = questionContainer.querySelector('.feedback');
-                                               if (existingFeedback) {
-                                                   existingFeedback.remove();
-                                               }
-                                           
-                                               // Create a new feedback element
-                                               const scoreforQn = document.createElement('h2');
-                                               let score = 0;
-                                               
-                                           
-                                               if (input.value === element.correct_answer) {
-                                                  
-                                                   scoreforQn.innerText = `Correct! You got it right`;
-                                                   scoreforQn.classList.add('correct-feedback');
-                                                   label.classList.add('correct-answer');
-                                               } else {
-                                                   scoreforQn.innerText = `Wrong! You got it Wrong`;
-                                                   scoreforQn.classList.add('wrong-feedback');
-                                                   label.classList.add('wrong-answer');
-
-                                                 
-                                                   
-                                                    // Automatically highlight the correct answer
-                                                    const allAnswers = document.querySelectorAll(`input[name="question-${index}"]`);
-                                                    allAnswers.forEach(answer => {
-                                                        if (answer.value === element.correct_answer) {
-                                                            answer.parentElement.classList.add('correct-answer'); // Highlight the correct answer
-                                                        }
-                                                    });
-                                                    
-                                                   
-                                                   
-                                               }
-                                           
-                                               // Append the new feedback to the question container
-                                               questionContainer.appendChild(scoreforQn);
-
-                                               //disable all radio buttons when the user has selected thier answer for the question
-                                               const allAnswers = document.querySelectorAll(`input[name="question-${index}"]`)
-                                               allAnswers.forEach((answer)=>
-                                               {
-                                                   answer.disabled = true;
-                                               })
-
-                                           });  //end of change event listener
-                                           
-
-
-                          
-
-                          
-
-
-
-                         
-
-
-                           
-                           }); //end of allanswerscombined for each
-
-
-                           
-
-
-                });
-
+                currentQuestionIndex = 0; 
+                renderSingleQuestion(currentQuestionIndex)
                 createEndButton();
                 createRestartButton();
             });
@@ -282,36 +187,181 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-//create the end quizz button
+ //function to render a single question
 
-    function createEndButton() {
-        const endBtn = document.createElement("button");
-        endBtn.innerText = "End Quiz";
-        endBtn.id = "endQuizButton";
-        questionDiv.appendChild(endBtn);
+  function renderSingleQuestion(index){
+        questionDiv.innerHTML = ''; // Clear previous questions, score, buttons
+        const element = triviaQuestions[index]
+    
+        // Create a container for each question
+        let questionContainer = document.createElement('div');
+        //give the container an id for styling purposes
+        questionContainer.classList.add("question-container");
 
-        endBtn.addEventListener("click", () => {
-            let score = 0
-            
-             // Iterate through all questions to calculate the score
-                triviaQuestions.forEach((element, index) => {
-                    const selectedAnswer = document.querySelector(`input[name="question-${index}"]:checked`);
-                    if (selectedAnswer && selectedAnswer.value === element.correct_answer) {
-                        score++; 
-                    }
-                });
+        //create a timer element
+        const timerDiv = document.createElement('div');
+        timerDiv.id = 'timer';
+        timerDiv.innerText = "Time Left: 15 seconds";
+        questionDiv.appendChild(timerDiv);
 
 
-            const scoreBoard = document.createElement("h2");
-            const percentage = ((score/triviaQuestions.length) * 100).toFixed(2);
-            scoreBoard.innerText = `Your score is: ${score} / ${triviaQuestions.length} (${percentage}%)`;
-            questionDiv.appendChild(scoreBoard);
+        //create a timer for each question
+        let timeLeft = 15;
+        const timer =  setInterval(()=>{
+            timeLeft--;
+            timerDiv.innerText = `Time left: ${timeLeft} seconds` 
 
-            endBtn.disabled = true;
-            endBtn.style.cursor = 'not-allowed';
-            endBtn.style.opacity = '0.6';
-        });
-    }
+            if (timeLeft<=0){
+                clearInterval(timer);
+                timerDiv.innerText = "Time's up!"
+                nextBtn.disabled = false;
+                const allAnswers = document.querySelectorAll(`input[name="question-${index}"]`)
+                                    allAnswers.forEach((answer)=>
+                                    {
+                                        answer.disabled = true;
+                                    })
+            }
+        },1000);
+
+        
+
+
+        //decoding 
+        function decodeHTML(html) {
+         const txt = document.createElement("textarea");
+         txt.innerHTML = html;
+         return txt.value;
+     }
+    
+        // Create, give content and append to the mother
+        let quizzQsn = document.createElement('h2');
+        quizzQsn.innerText = `${index + 1}. ${decodeHTML(element.question)}`;
+        questionContainer.appendChild(quizzQsn);
+        questionDiv.appendChild(questionContainer);
+    
+        // Combine correct and incorrect answers for each question
+        //spread operator gives us a copy for the original array and then we add the correct answer to the array
+        //we need to work with all answers both wrong and right as one
+        let allAnswersCombined = [...element.incorrect_answers, element.correct_answer];
+    
+        // array.short()sorts in alphabetical order but adding the random callback sorts in any order
+        allAnswersCombined.sort(() => Math.random() - 0.5);
+                // Create and append answer choices
+                allAnswersCombined.forEach(answer => {
+                let label = document.createElement('label');
+                let input = document.createElement('input');
+                input.type = 'radio'; //input type is radio
+                input.name = `question-${index}`; // give the answers an unique name .. in this case the index of the question
+                input.value = answer;
+                label.id = "labelS"
+
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(answer));
+                questionContainer.appendChild(label);
+                questionContainer.appendChild(document.createElement('br')); // Line break for better formatting
+
+                          // Add event listener to check if the answer is correct
+                                input.addEventListener('change', () => {
+                                    clearInterval(timer);
+                                    // Remove any existing feedback for this question
+                                    const existingFeedback = questionContainer.querySelector('.feedback');
+                                    if (existingFeedback) {
+                                        existingFeedback.remove();
+                                    }
+                                
+                                    // Create a new feedback element
+                                    const scoreforQn = document.createElement('h2');
+                                   
+                                    
+                                
+                                    if (input.value === element.correct_answer) {
+                                       
+                                        scoreforQn.innerText = `Correct! You got it right`;
+                                        scoreforQn.classList.add('correct-feedback');
+                                        label.classList.add('correct-answer');
+                                    } else {
+                                        scoreforQn.innerText = `Wrong! You got it Wrong`;
+                                        scoreforQn.classList.add('wrong-feedback');
+                                        label.classList.add('wrong-answer');
+
+                                      
+                                        
+                                         // Automatically highlight the correct answer
+                                         const allAnswers = document.querySelectorAll(`input[name="question-${index}"]`);
+                                         allAnswers.forEach(answer => {
+                                             if (answer.value === element.correct_answer) {
+                                                 answer.parentElement.classList.add('correct-answer'); // Highlight the correct answer
+                                             }
+                                         });
+                                            
+                                    } //end of else block
+
+
+
+                                    scoreforQn.classList.add('feedback');
+                                    questionContainer.appendChild(scoreforQn);
+
+                                    nextBtn.disabled = false;
+
+                                
+
+                                    //disable all radio buttons when the user has selected thier answer for the question
+                                    const allAnswers = document.querySelectorAll(`input[name="question-${index}"]`)
+                                    allAnswers.forEach((answer)=>
+                                    {
+                                        answer.disabled = true;
+                                    })
+
+                                });  //end of change event listener
+                                          
+                }); //end of allanswerscombined for each
+
+
+
+
+     // Add Next Button
+     const nextBtn = document.createElement('button');
+     nextBtn.innerText = (index === triviaQuestions.length - 1) ? "Finish Quiz" : "Next Question";
+     nextBtn.disabled = true; 
+     nextBtn.id = "nextBtn";
+     questionDiv.appendChild(nextBtn);
+ 
+     nextBtn.addEventListener('click', () => {
+        if (index < triviaQuestions.length - 1) {
+            renderSingleQuestion(++currentQuestionIndex); 
+        } else {
+            showFinalScore(); 
+        }
+    });        
+
+  } // end of function to render one question
+
+
+
+
+
+  //create function to show final score
+
+  function showFinalScore(){
+
+    questionDiv.innerHTML = '';
+    const scoreBoard = document.createElement("h2");
+    const percentage = ((score/triviaQuestions.length) * 100).toFixed(2);
+    scoreBoard.innerText = `Your score is: ${score} / ${triviaQuestions.length} (${percentage}%)`;
+    questionDiv.appendChild(scoreBoard);
+
+    // const timeTaken = document.createElement("h2");
+    // timeTaken.innerText = `You completed the quiz in ${totalTime} seconds!`;
+    // questionDiv.appendChild(timeTaken);
+
+
+    createRestartButton();
+
+
+
+
+  } //end of show final score function
+
 
 
 
@@ -329,6 +379,13 @@ document.addEventListener("DOMContentLoaded", () => {
             loadQuiz(); 
         });
     }
+
+
+
+
+
+
+
 
 
 
