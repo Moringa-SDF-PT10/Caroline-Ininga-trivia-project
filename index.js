@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
         let triviaQuestions = [];
         let currentQuestionIndex = 0;
         let score = 0;
+        let startTime;
+        let endTime;
 
 
 
@@ -144,7 +146,10 @@ document.addEventListener("DOMContentLoaded", () => {
         startButtonDiv.appendChild(startBtn);
     
         startBtn.addEventListener('click', () => {
-            startTime = new Date();
+            if (!startTime) { 
+                startTime = new Date();
+            }
+            console.log(startTime)
             questionDiv.style.display = "block";
             startBtn.style.display = 'none';
             choose.style.display = 'none';
@@ -178,7 +183,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 triviaQuestions = data.results;
                 currentQuestionIndex = 0; 
                 renderSingleQuestion(currentQuestionIndex)
-                createEndButton();
                 createRestartButton();
             });
     } //end of loadquizz function
@@ -331,6 +335,8 @@ document.addEventListener("DOMContentLoaded", () => {
             renderSingleQuestion(++currentQuestionIndex); 
         } else {
             showFinalScore(); 
+            
+
         }
     });        
 
@@ -350,9 +356,17 @@ document.addEventListener("DOMContentLoaded", () => {
     scoreBoard.innerText = `Your score is: ${score} / ${triviaQuestions.length} (${percentage}%)`;
     questionDiv.appendChild(scoreBoard);
 
-    // const timeTaken = document.createElement("h2");
-    // timeTaken.innerText = `You completed the quiz in ${totalTime} seconds!`;
-    // questionDiv.appendChild(timeTaken);
+    
+    if (!endTime) { 
+        endTime = new Date();
+    }
+    console.log(endTime)
+
+    const totalTime = Math.floor((endTime - startTime) / 1000);
+
+    const timeTaken = document.createElement("h2");
+    timeTaken.innerText = `You completed the quiz in ${totalTime} seconds!`;
+    questionDiv.appendChild(timeTaken);
 
 
     createRestartButton();
