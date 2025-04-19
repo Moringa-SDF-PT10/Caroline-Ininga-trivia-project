@@ -1,256 +1,184 @@
-
-
-#navSection{
-    margin-top: 5px;
-    background-color:    #f2f2f2;
-    text-transform: capitalize;
-    padding: 20px 0 !important;
-    font-size: 30x;
-    font-weight: 500;
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #bcbcbc, #d1d1d1, #e6e6e6);
     color: #2e2e2e;
-    font-family: 'Roboto', sans-serif;
-    margin-bottom: 0;
-    margin-right: 30px;
-    text-align: center;
-    width : 100%;
-}
-
-#imageSection{
-
-    margin-top: 5px;
-    background-color:   white;
-    text-transform: capitalize;
-    padding: 20px 0 !important;
-    font-size: 30x;
-    font-weight: 500;
-    color: #2e2e2e;
-    font-family: 'Roboto', sans-serif;
-    margin-bottom: 0;
-    margin-right: 30px;
+    margin: 0;
+    padding: 0;
     text-align: center;
 }
 
-img{
-
-    width: 200px;
-    height: 200px;
-    left: 45%;
-    align-items: center;
-    
-
+h1, h2 {
+    margin: 20px 0;
 }
 
-#choosePreferences{
-
-    margin-top: 5px;
-    background-color:    #f2f2f2;
-    text-transform: capitalize;
-    padding: 20px 0 !important;
-    font-size: 30x;
-    font-weight: 500;
-    color: #2e2e2e;
-    font-family: 'Roboto', sans-serif;
-    margin-bottom: 0;
-    margin-right: 30px;
-    text-align: center;
-    width : 100%;
-
-
-
+#navSection {
+    padding: 20px;
+    background-color: rgba(240, 240, 240, 0.85);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
-#userOptions {
-    display: flex; /* Use flexbox for layout */
-    font-family: 'Roboto', sans-serif;
-    align-items: center; 
-    justify-content: center; 
-    gap: 15px; /* Add spacing between dropdowns */
-    padding: 20px; /* Add padding inside the div */
-    margin: 20px auto; /* Center the div horizontally */
-    width: 100%; /* Set the width of the div */
-    max-width: 1800px; /* Limit the maximum width */
-    background-color: #f9f9f9; /* Light background color */
-    border: 1px solid #ccc; /* Add a border */
-    border-radius: 10px; /* Round the corners */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
-}
-
-#userOptions select {
-    width: 90%; /* Make the dropdowns take up most of the width */
-    max-width: 600px; /* Limit the maximum width for responsiveness */
-    padding: 10px; /* Add padding inside the dropdowns */
-    font-size: 16px; /* Increase font size for readability */
-    border: 1px solid #ccc; /* Add a border */
-    border-radius: 5px; /* Round the corners */
-    background-color: #fff; /* White background */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    cursor: pointer; /* Add a pointer cursor */
-  
-}
-
-#userOptions select:focus {
-    outline: none; /* Remove the default focus outline */
-    border-color: blue; /* Highlight the border on focus */
-    box-shadow: 0 0 5px rgba(0, 0, 255, 0.5); /* Add a blue glow */
-}
-
-
-
-#startButtonSection{
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    background-color:    #f2f2f2;  
-    margin: 0; 
-    height: 150px;
-
-
-}
-
-
-
-#questionsSection {
-     display: flex;
-    flex-direction: column; 
-    justify-content: flex-start; 
-    margin: 20px auto; 
-    padding: 20px; 
-    padding-left: 40px; 
-    width: 80%; 
-    max-height: 500px; 
-    overflow-y: auto; 
-    border: 1px solid #ccc; 
-    background-color: #f9f9f9; 
+#imageSection img {
+    max-width: 100px;
+    margin-top: 20px;
     border-radius: 10px;
 }
 
+#choosePreferences {
+    margin-top: 30px;
+    font-size: 1.2rem;
+}
+
+#userOptions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+select {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    background-color: #f9f9f9;
+    color: #2a2a2a;
+    min-width: 150px;
+}
+
+.bottonStyling {
+    background-color: #bfa164;
+    color: #fff;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 25px;
+}
+
+.bottonStyling:hover {
+    background-color: #a88c54;
+}
+
+#questionsSection {
+    margin-top: 30px;
+    padding: 20px;
+}
+
+.question-container {
+    background-color: #f0f0f0;
+    border-radius: 15px;
+    padding: 25px;
+    max-width: 700px;
+    margin: 0 auto;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+.labelS {
+    display: block;
+    text-align: left;
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #d9d9d9;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.labelS:hover {
+    background-color: #cfcfcf;
+}
 
 .correct-answer {
-    position: relative;
-    padding-left: 30px; 
-    color: white; 
-    font-weight: bold; 
-    background-color: #32CD32;
-    width: 300px;
+    background-color: #81c784 !important;
+    color: #fff;
 }
 
 .correct-answer::before {
     content: '✔'; 
-    position: absolute;
+    /* position: absolute;
     left: 5px; 
     color: white; 
     font-size: 18px; 
-    font-weight: bold;
+    font-weight: bold; */
     
 }
 
 .wrong-answer {
-    position: relative;
-    padding-left: 30px; 
-    color: white; 
-    font-weight: bold; 
-    background-color: #FF6347; 
-    width: 300px; 
+    background-color: #e57373 !important;
+    color: #fff;
 }
 
 .wrong-answer::before {
     content: '✖'; 
-    position: absolute;
+    /* position: absolute;
     left: 5px; 
     color: white; 
     font-size: 18px; 
+    font-weight: bold; */
+}
+.correct-feedback {
+    color: #4caf50;
     font-weight: bold;
 }
 
-.correct-feedback::before {
-    content: "😊";
-    padding: 3px;
-  }
-  
-  
-.wrong-feedback::before{
-    content: "😔";
-    padding: 3px;
-
+.wrong-feedback {
+    color: #f44336;
+    font-weight: bold;
 }
 
-.correct-feedback
-{
-    
-    color: #32CD32;
-    display: inline-block;
-    padding: 5px;
-  
-    
+#timer {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #0b0901;
 }
 
-.wrong-feedback
-{
-
- color: #FF6347;
- display: inline-block;
- padding: 5px;
-
-}
-
-.correct-feedback-quizz-end{
-    background-color: #32CD32; 
-    color: white;
-    display: inline-block;
-    padding: 5px;
-
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 
 
 
-/*buttons styling*/
 
- #startQuizzButton{
 
-    background-color: #4a90e2;
-    color: white;
-    font-size: 30px;
-    border: none;
-    border-radius: 30px;
-    padding: 10px 150px;
-    margin-top: 20px; 
-    left : 500px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
 
-} 
-#startQuizzButton:hover {
-    background-color: #357ab8; /* Slightly darker blue on hover */
-    transform: scale(1.05); /* Slightly enlarge the button */
+
+
+#userOptions h3 {
+    margin: 10px 0 5px;
+    font-size: 1.1rem;
+    color: #2e2e2e;
+    font-weight: 600;
+    text-align: left;
 }
 
-#endQuizButton{
-
-
-    background-color: blue;
-    color: white;
-    font-size: 20px;
-    border: none;
-    border-radius: 30px;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-top: 20px; 
-    float: left;
-    
+.select-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    min-width: 200px;
+    transition: transform 0.2s ease-in-out;
 }
 
-#restartQuizButton{
-   
-    background-color: blue;
-    color: white;
-    font-size: 20px;
-    border: none;
-    border-radius: 30px;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-top: 20px; 
-    float: right;
+.select-container:hover {
+    transform: scale(1.02);
+}
 
+select:focus {
+    outline: 2px solid #bfa164;
+    background-color: #fff;
+}
 
-
+select:hover {
+    background-color: #eaeaea;
 }

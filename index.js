@@ -7,26 +7,23 @@ document.addEventListener("DOMContentLoaded", () => {
         let endTime;
 
 
-
-    //create a image for the header section and append it to the image div 
-    const imageBox = document.getElementById("imageSection");
-    const img = document.createElement("img");
-    img.src = "./assets/quizztime.png";
-    imageBox.appendChild(img);
-
     //grab some existing dom elements
-    const navDiv = document.getElementById('navSection');
-    const startButtonDiv = document.getElementById("startButtonSection");
-    const questionDiv = document.getElementById("questionsSection");
-    const choose = document.getElementById("choosePreferences");
-    const userOptionsDiv = document.getElementById("userOptions");
-   
+     const navDiv = document.getElementById('navSection');
+     const startButtonDiv = document.getElementById("startButtonSection");
+     const questionDiv = document.getElementById("questionsSection");
+     const choose = document.getElementById("choosePreferences");
+     const userOptionsDiv = document.getElementById("userOptions");
 
     //create my heading title
     let title = document.createElement("h1");
     title.innerText = "You are about to play, the ultimate Trivia Game";
     navDiv.appendChild(title);
 
+    //create a image for the header section and append it to the image div 
+    const imageBox = document.getElementById("imageSection");
+    const img = document.createElement("img");
+    img.src = "./assets/clipart1057186.png";
+    imageBox.appendChild(img);
 
     //section to introduce option selection
     let statement = document.createElement("h2");
@@ -36,8 +33,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //no of questions selection selection option
     const noOfQuestions = document.createElement('select');
-    noOfQuestions.id = "noOfQsns";
-    userOptionsDiv.appendChild(noOfQuestions);
+    // noOfQuestions.setAttribute('for', 'noOfQsns'); 
+    noOfQuestions.innerText = "Number of Questions:"; 
+
+    let qHeader = document.createElement("h3");
+    qHeader.innerText = "Select Number of Questions:";
+    userOptionsDiv.appendChild(qHeader);
+    userOptionsDiv.appendChild(noOfQuestions)
+
+    let qContainer = document.createElement("div");
+    qContainer.classList.add("select-container");
+    qContainer.appendChild(qHeader);
+    qContainer.appendChild(noOfQuestions);
+    userOptionsDiv.appendChild(qContainer);
+
+
+    
+    
     const noOfQsn = [5,10,15,20,25];
 
     noOfQsn.forEach((num) =>{
@@ -50,7 +62,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //difficulty level selection option
     const difficultyLevel = document.createElement('select');
-     userOptionsDiv.appendChild(difficultyLevel);
+    
+    let dHeader = document.createElement("h3");
+    dHeader.innerText = "Select Difficulty Level:";
+    userOptionsDiv.appendChild(dHeader);
+    userOptionsDiv.appendChild(difficultyLevel);
+    let dContainer = document.createElement("div");
+    dContainer.classList.add("select-container");
+    dContainer.appendChild(dHeader);
+    dContainer.appendChild(difficultyLevel);
+    userOptionsDiv.appendChild(dContainer);
+
+
      difficultyLevel.id = "diffLevel";
 
      const difficulL = ["easy", "hard", "medium"]
@@ -62,9 +85,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
      })
 
+
+
      //category of questions user selection
      const category = document.createElement('select');
-     userOptionsDiv.append(category);
+     let cHeader = document.createElement("h3");
+    cHeader.innerText = "Select Category:";
+    userOptionsDiv.appendChild(cHeader);
+    userOptionsDiv.appendChild(category);
+
+    let cContainer = document.createElement("div");
+    cContainer.classList.add("select-container");
+    cContainer.appendChild(cHeader);
+    cContainer.appendChild(category);
+    userOptionsDiv.appendChild(cContainer);
+     
      category.id = "cat";
   
     const categories = [{ 
@@ -118,8 +153,17 @@ document.addEventListener("DOMContentLoaded", () => {
     //type of questions user selection
 
     let type = document.createElement("select");
+    let tHeader = document.createElement("h3");
+    tHeader.innerText = "Select Type of Questions:";
+    userOptionsDiv.appendChild(tHeader);
     userOptionsDiv.appendChild(type);
     type.id = 'type';
+
+    let tContainer = document.createElement("div");
+    tContainer.classList.add("select-container");
+    tContainer.appendChild(tHeader);
+    tContainer.appendChild(type);
+    userOptionsDiv.appendChild(tContainer)
 
     const typeOptions = ["multiple", "boolean"]
     typeOptions.forEach((typ)=>{
@@ -142,10 +186,12 @@ document.addEventListener("DOMContentLoaded", () => {
   
         const startBtn = document.createElement('button');
         startBtn.innerText = "Start Quiz";
+        startBtn.classList.add("bottonStyling")
         startBtn.id = 'startQuizzButton';
         startButtonDiv.appendChild(startBtn);
     
         startBtn.addEventListener('click', () => {
+
             if (!startTime) { 
                 startTime = new Date();
             }
@@ -154,6 +200,10 @@ document.addEventListener("DOMContentLoaded", () => {
             startBtn.style.display = 'none';
             choose.style.display = 'none';
             userOptionsDiv.style.display = 'none';
+            startButtonDiv.style.display = 'none';
+            imageBox.style.display = 'none';
+            navDiv.style.display = 'none';
+            
 
             loadQuiz();
         });
@@ -183,7 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 triviaQuestions = data.results;
                 currentQuestionIndex = 0; 
                 renderSingleQuestion(currentQuestionIndex)
-                createRestartButton();
+                
             });
     } //end of loadquizz function
 
@@ -256,8 +306,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 let input = document.createElement('input');
                 input.type = 'radio'; //input type is radio
                 input.name = `question-${index}`; // give the answers an unique name .. in this case the index of the question
-                input.value = answer;
-                label.id = "labelS"
+                input.value = decodeHTML(answer);
+                label.classList.add("labelS")
 
                 label.appendChild(input);
                 label.appendChild(document.createTextNode(answer));
@@ -328,13 +378,21 @@ document.addEventListener("DOMContentLoaded", () => {
      nextBtn.innerText = (index === triviaQuestions.length - 1) ? "Finish Quiz" : "Next Question";
      nextBtn.disabled = true; 
      nextBtn.id = "nextBtn";
-     questionDiv.appendChild(nextBtn);
+     questionContainer.appendChild(nextBtn);
  
      nextBtn.addEventListener('click', () => {
         if (index < triviaQuestions.length - 1) {
             renderSingleQuestion(++currentQuestionIndex); 
         } else {
             showFinalScore(); 
+            userOptionsDiv.style.display = 'flex';
+            choose.style.display = 'block'; 
+            
+            startBtn.style.display = 'none';
+            startButtonDiv.style.display = 'none';
+            // imageBox.style.display = 'block';
+            // navDiv.style.display = 'block';
+
             
 
         }
@@ -385,10 +443,26 @@ document.addEventListener("DOMContentLoaded", () => {
     function createRestartButton() {
         const restartBtn = document.createElement("button");
         restartBtn.innerText = "Restart Quiz";
+        restartBtn.classList.add("bottonStyling")
         restartBtn.id = "restartQuizButton";
         questionDiv.appendChild(restartBtn);
 
         restartBtn.addEventListener("click", () => {
+            // startBtn.style.display = 'none';
+            // choose.style.display = 'none';
+            // userOptionsDiv.style.display = 'none';
+            // startButtonDiv.style.display = 'none';
+
+            userOptionsDiv.style.display = 'none';
+            choose.style.display = 'none';     
+            startBtn.style.display = 'none';
+            startButtonDiv.style.display = 'none';
+            imageBox.style.display = 'none';
+            navDiv.style.display = 'none';
+
+
+
+
             triviaQuestions = [];
             loadQuiz(); 
         });
