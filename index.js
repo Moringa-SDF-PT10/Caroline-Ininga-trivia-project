@@ -320,6 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     
                                 
                                     if (input.value === element.correct_answer) {
+                                        score++;
                                        
                                         scoreforQn.innerText = `Correct! You got it right`;
                                         scoreforQn.classList.add('correct-feedback');
@@ -394,12 +395,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-  //create function to show final score
+  //create function to show final scoreg
 
   function showFinalScore(){
 
     
 
+    console.log(score);
     questionDiv.innerHTML = '';
     const scoreBoard = document.createElement("h2");
     const percentage = ((score/triviaQuestions.length) * 100).toFixed(2);
@@ -410,14 +412,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!endTime) { 
         endTime = new Date();
     }
-    // function formatTime(seconds) {
-    //     const hrs = Math.floor(seconds / 3600);
-    //     const mins = Math.floor((seconds % 3600) / 60);
-    //     const secs = seconds % 60;
-      
-    //     return `${hrs}h ${mins}m ${secs}s`;
-    //   }
- 
+    
 
     const totalTime = Math.floor((endTime - startTime) / 1000);
 
