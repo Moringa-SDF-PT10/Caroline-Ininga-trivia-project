@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let qContainer = document.createElement("div");
     qContainer.classList.add("select-container");
     const noOfQuestions = document.createElement('select');
-    noOfQuestions.id = 'noOfQsns';
+    noOfQuestions.id = "noOfQsns";
     let qHeader = document.createElement("h3");
     qHeader.innerText = "Select No. of Questions:";
     qContainer.appendChild(qHeader);
@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let dContainer = document.createElement("div");
     dContainer.classList.add("select-container");
     const difficultyLevel = document.createElement('select');
+    difficultyLevel.id = "diffLevel";
     let dHeader = document.createElement("h3");
     dHeader.innerText = "Select Difficulty Level:";
     dContainer.appendChild(dHeader);
@@ -83,6 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let cContainer = document.createElement("div");
     cContainer.classList.add("select-container");
     const category = document.createElement('select');
+    category.id = "cat";
     let cHeader = document.createElement("h3");
     cHeader.innerText = "Select Category:";
     cContainer.appendChild(cHeader);
@@ -137,6 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let tContainer = document.createElement("div");
     tContainer.classList.add("select-container");
     let type = document.createElement("select");
+    type.id = "type";
     let tHeader = document.createElement("h3");
     tHeader.innerText = "Select Type of Questions:";
     tContainer.appendChild(tHeader);
@@ -161,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-    //create the start quizz buttton
+    //create the start quizz buttton and event listener
   
         const startBtn = document.createElement('button');
         startBtn.innerText = "Start Quiz";
@@ -174,7 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!startTime) { 
                 startTime = new Date();
             }
-            console.log(startTime)
+            
             questionDiv.style.display = "block";
             startBtn.style.display = 'none';
             choose.style.display = 'none';
@@ -185,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
 
             loadQuiz();
-        });
+        }); //end of start button click event listener
         
         
 
@@ -252,9 +255,15 @@ document.addEventListener("DOMContentLoaded", () => {
                                     allAnswers.forEach((answer)=>
                                     {
                                         answer.disabled = true;
+
+                                        if (answer.value === element.correct_answer) {
+                                            answer.parentElement.classList.add('correct-answer'); // Highlight the correct answer
+                                        }
+
+                                        
                                     })
-            }
-        },1000);
+            } // end of if statement for timer
+        },1000); //end of setInterval function
 
         
 
@@ -264,11 +273,11 @@ document.addEventListener("DOMContentLoaded", () => {
          const txt = document.createElement("textarea");
          txt.innerHTML = html;
          return txt.value;
-     }
+     } // end of decoding
     
         // Create, give content and append to the mother
         let quizzQsn = document.createElement('h2');
-        quizzQsn.innerText = `${index + 1}. ${decodeHTML(element.question)}`;
+        quizzQsn.innerText = `${index + 1}. ${decodeHTML(element.question)}`; //give numbering to each question from 1
         questionContainer.appendChild(quizzQsn);
         questionDiv.appendChild(questionContainer);
     
@@ -279,6 +288,9 @@ document.addEventListener("DOMContentLoaded", () => {
     
         // array.short()sorts in alphabetical order but adding the random callback sorts in any order
         allAnswersCombined.sort(() => Math.random() - 0.5);
+
+
+
                 // Create and append answer choices
                 allAnswersCombined.forEach(answer => {
                 let label = document.createElement('label');
@@ -317,8 +329,6 @@ document.addEventListener("DOMContentLoaded", () => {
                                         scoreforQn.classList.add('wrong-feedback');
                                         label.classList.add('wrong-answer');
 
-                                      
-                                        
                                          // Automatically highlight the correct answer
                                          const allAnswers = document.querySelectorAll(`input[name="question-${index}"]`);
                                          allAnswers.forEach(answer => {
@@ -348,6 +358,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 });  //end of change event listener
                                           
                 }); //end of allanswerscombined for each
+
 
 
 
@@ -387,6 +398,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showFinalScore(){
 
+    
+
     questionDiv.innerHTML = '';
     const scoreBoard = document.createElement("h2");
     const percentage = ((score/triviaQuestions.length) * 100).toFixed(2);
@@ -397,12 +410,29 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!endTime) { 
         endTime = new Date();
     }
-    console.log(endTime)
+    // function formatTime(seconds) {
+    //     const hrs = Math.floor(seconds / 3600);
+    //     const mins = Math.floor((seconds % 3600) / 60);
+    //     const secs = seconds % 60;
+      
+    //     return `${hrs}h ${mins}m ${secs}s`;
+    //   }
+ 
 
     const totalTime = Math.floor((endTime - startTime) / 1000);
 
+    function formatTime(totalTime) {
+        const hrs = Math.floor(totalTime / 3600);
+        const mins = Math.floor((totalTime % 3600) / 60);
+        const secs = totalTime % 60;
+      
+        return `${hrs}h ${mins}m ${secs}s`;
+      }
+      let formattedTime = formatTime(totalTime)
+  
+
     const timeTaken = document.createElement("h2");
-    timeTaken.innerText = `You completed the quiz in ${totalTime} seconds!`;
+    timeTaken.innerText = `You completed the quiz in ${formattedTime} seconds!`;
     questionDiv.appendChild(timeTaken);
 
 
@@ -445,7 +475,7 @@ document.addEventListener("DOMContentLoaded", () => {
             triviaQuestions = [];
             loadQuiz(); 
         });
-    }
+    } //end of create restart button
 
 
 
