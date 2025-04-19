@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let qContainer = document.createElement("div");
     qContainer.classList.add("select-container");
     const noOfQuestions = document.createElement('select');
+    noOfQuestions.id = 'noOfQsns';
     let qHeader = document.createElement("h3");
     qHeader.innerText = "Select No. of Questions:";
     qContainer.appendChild(qHeader);
