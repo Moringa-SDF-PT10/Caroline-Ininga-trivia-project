@@ -25,7 +25,7 @@ h1, h2 {
 
 #choosePreferences {
     margin-top: 30px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
 
 #userOptions {
@@ -50,13 +50,13 @@ select {
 .bottonStyling {
     background-color: #bfa164;
     color: #fff;
-    padding: 12px 25px;
+    padding: 18px 70px;
     border: none;
-    border-radius: 10px;
-    font-size: 1rem;
+    border-radius: 15px;
+    font-size: 1.5rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 25px;
+    margin-top: 40px;
 }
 
 .bottonStyling:hover {

@@ -32,24 +32,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     //no of questions selection selection option
-    const noOfQuestions = document.createElement('select');
-    // noOfQuestions.setAttribute('for', 'noOfQsns'); 
-    noOfQuestions.innerText = "Number of Questions:"; 
-
-    let qHeader = document.createElement("h3");
-    qHeader.innerText = "Select Number of Questions:";
-    userOptionsDiv.appendChild(qHeader);
-    userOptionsDiv.appendChild(noOfQuestions)
-
     let qContainer = document.createElement("div");
     qContainer.classList.add("select-container");
+    const noOfQuestions = document.createElement('select');
+    let qHeader = document.createElement("h3");
+    qHeader.innerText = "Select No. of Questions:";
     qContainer.appendChild(qHeader);
     qContainer.appendChild(noOfQuestions);
     userOptionsDiv.appendChild(qContainer);
 
-
-    
-    
     const noOfQsn = [5,10,15,20,25];
 
     noOfQsn.forEach((num) =>{
@@ -58,84 +49,73 @@ document.addEventListener("DOMContentLoaded", () => {
         opt.innerText = `${num} questions`;
         noOfQuestions.appendChild(opt);
 
-    })
+    }) //end of question selecton option
+
+
+
+
 
     //difficulty level selection option
-    const difficultyLevel = document.createElement('select');
-    
-    let dHeader = document.createElement("h3");
-    dHeader.innerText = "Select Difficulty Level:";
-    userOptionsDiv.appendChild(dHeader);
-    userOptionsDiv.appendChild(difficultyLevel);
     let dContainer = document.createElement("div");
     dContainer.classList.add("select-container");
+    const difficultyLevel = document.createElement('select');
+    let dHeader = document.createElement("h3");
+    dHeader.innerText = "Select Difficulty Level:";
     dContainer.appendChild(dHeader);
     dContainer.appendChild(difficultyLevel);
     userOptionsDiv.appendChild(dContainer);
 
 
-     difficultyLevel.id = "diffLevel";
-
-     const difficulL = ["easy", "hard", "medium"]
+     const difficulL = [{"": "Any Difficulty"},{"easy": "Easy"}, {"hard": "Hard"}, {"medium":"Medium"}]
      difficulL.forEach((dif)=>{
-        let diffL = document.createElement("option");
-        diffL.value = dif;
-        diffL.innerText = `${dif}`;
-        difficultyLevel.appendChild(diffL)
+        const [key, value] = Object.entries(dif)[0]; 
+        let diffLevel = document.createElement("option");
+        diffLevel.value = key;
+        diffLevel.innerText = value;
+        difficultyLevel.appendChild(diffLevel)
 
      })
 
 
 
      //category of questions user selection
-     const category = document.createElement('select');
-     let cHeader = document.createElement("h3");
-    cHeader.innerText = "Select Category:";
-    userOptionsDiv.appendChild(cHeader);
-    userOptionsDiv.appendChild(category);
-
     let cContainer = document.createElement("div");
     cContainer.classList.add("select-container");
+    const category = document.createElement('select');
+    let cHeader = document.createElement("h3");
+    cHeader.innerText = "Select Category:";
     cContainer.appendChild(cHeader);
     cContainer.appendChild(category);
     userOptionsDiv.appendChild(cContainer);
      
-     category.id = "cat";
   
-    const categories = [{ 
-        18 : "Computers"},
+    const categories = [
         {
+          "": "Any Category"
+        },
+        { 
+        18 : "Computers"},{
          10: "Books"
-        },
-        {
-            22: "Geography"
-        },
-        {
-            9: "General-Knowledge"
-        },
-        {
-            19: "Mathematics"
         },{
+            22: "Geography"
+        },{
+            9: "General-Knowledge"
+        },{
+            19: "Mathematics"},{
             15: "Video Games"
-        },
-        {
+        },{
             11: "Films"
-        },
-        {
+        },{
             17: "Science & Nature"
-        },
-        {
+        },{
             21: "Sports"
-        },
-        {
+        },{
             28: "Vehicles"
         },{
             27: "Animals"
-        },
-        {
+        },{
             26: "Celebrities"
-        },
-        {
+        },{
             12: "Music"
         }
 
@@ -150,26 +130,24 @@ document.addEventListener("DOMContentLoaded", () => {
         category.appendChild(opt3);
     })
     
-    //type of questions user selection
 
+
+    //type of questions user selection
+    let tContainer = document.createElement("div");
+    tContainer.classList.add("select-container");
     let type = document.createElement("select");
     let tHeader = document.createElement("h3");
     tHeader.innerText = "Select Type of Questions:";
-    userOptionsDiv.appendChild(tHeader);
-    userOptionsDiv.appendChild(type);
-    type.id = 'type';
-
-    let tContainer = document.createElement("div");
-    tContainer.classList.add("select-container");
     tContainer.appendChild(tHeader);
     tContainer.appendChild(type);
     userOptionsDiv.appendChild(tContainer)
 
-    const typeOptions = ["multiple", "boolean"]
+    const typeOptions = [  {"": "Any Type"}  ,  {"multiple": "Multiple Choice Qsns"}, {"boolean":"True/False"}]
     typeOptions.forEach((typ)=>{
+        const [key, value] = Object.entries(typ)[0]; 
         let opt4 = document.createElement("option");
-        opt4.value = typ;
-        opt4.innerText = `${typ}`
+        opt4.value = key;
+        opt4.innerText = value;
         type.appendChild(opt4)
 
     })
