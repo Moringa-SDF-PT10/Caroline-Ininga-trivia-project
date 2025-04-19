@@ -199,6 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
 //create the load quizz function
 
     function loadQuiz() {
+        score = 0;
        
         questionDiv.innerHTML = ''; 
         //grab the selected user options
