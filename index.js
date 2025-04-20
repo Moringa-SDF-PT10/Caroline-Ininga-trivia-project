@@ -250,7 +250,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (timeLeft<=0){
                 clearInterval(timer);
-                timerDiv.innerText = "Time's up!"
+                timerDiv.innerText = "Time's up! Better Luck next time"
+                timerDiv.style.color = "#e57373"
                 nextBtn.disabled = false;
                 const allAnswers = document.querySelectorAll(`input[name="question-${index}"]`)
                                     allAnswers.forEach((answer)=>
@@ -320,7 +321,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                    
                                     
                                 
-                                    if (input.value === element.correct_answer) {
+                                    if (input.value === decodeHTML(element.correct_answer)) {
                                         score++;
                                        
                                         scoreforQn.innerText = `Correct! You got it right`;
