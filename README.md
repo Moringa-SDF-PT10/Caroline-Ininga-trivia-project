@@ -2,7 +2,9 @@
 
 ## 1.  Phase 1 Final Project : Trivia Project Summary
 
-The Trivia project was my final project in Moringa SDF_PT10 in Phase 1. It was an individual project where 5 problem statements were provided for us and each student had to pick one problem statement to work on. The time given to complete the project was about a week and a half from 10th - 21st April 2025.
+The Trivia project was my final project in Moringa SDF_PT10 in Phase 1. It was an individual project where 5 problem statements were provided for us and each student had to pick one problem statement to work on. The time given to complete the project was about a week and a half from 10th - 21st April 2025. 
+
+My application uses data from this external public api: [link]:https://opentdb.com/api_config.php
 
 ## 2. Languages/Technologies used
  - Html
@@ -30,8 +32,7 @@ Key features include;
 
 This app is hosted on github pages. 
 
-
-[Click here](https://moringa-sdf-pt10.github.io/Caroline-Ininga-trivia-project/) to play trivia game on the web
+[Click this link to play the game online] :https://moringa-sdf-pt10.github.io/Caroline-Ininga-trivia-project/ 
 
 
 ## 5. How to run this repository on your local machine
