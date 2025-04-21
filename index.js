@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
             navDiv.style.display = 'none';
             
 
-            loadQuiz();
+            CreateQuiz();
         }); //end of start button click event listener
         
         
@@ -197,9 +197,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-//create the load quizz function
+//create the create quizz function
 
-    function loadQuiz() {
+    function CreateQuiz() {
         score = 0;
        
         questionDiv.innerHTML = ''; 
@@ -216,18 +216,18 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(data => {
                 triviaQuestions = data.results;
                 currentQuestionIndex = 0; 
-                renderSingleQuestion(currentQuestionIndex)
+                createSingleQuestion(currentQuestionIndex)
                 
             });
-    } //end of loadquizz function
+    } //end of createquizz function
 
 
 
 
 
- //function to render a single question
+ //function to create a single question
 
-  function renderSingleQuestion(index){
+  function createSingleQuestion(index){
         questionDiv.innerHTML = ''; 
         const element = triviaQuestions[index]
     
@@ -384,7 +384,7 @@ document.addEventListener("DOMContentLoaded", () => {
  
      nextBtn.addEventListener('click', () => {
         if (index < triviaQuestions.length - 1) {
-            renderSingleQuestion(++currentQuestionIndex); 
+            createSingleQuestion(++currentQuestionIndex); 
         } else {
             showFinalScore(); 
             userOptionsDiv.style.display = 'flex';
@@ -400,7 +400,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });        
 
-  } // end of function to render one question
+  } // end of function to create single question
 
 
 
@@ -479,7 +479,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             triviaQuestions = [];
-            loadQuiz(); 
+            CreateQuiz(); 
         });
     } //end of create restart button
 

@@ -80,13 +80,13 @@ I have various header elements, including the title and image header
 
 Then, I create the quiz user preferences selection section 
 
-The start quizz button on click event listener is where logic begins. The start quizz on click event listener hides elements of the header section of the page and calls the loadQuizz() function. 
+The start quizz button on click event listener is where logic begins. The start quizz on click event listener hides elements of the header section of the page and calls the createQuizz() function. 
 
-The loadQuizz() function fetches and renders the data from the api and calls the renderSingleQuestion() function. 
-The work of the renderSingleQuestion() function is to create a container for each question, create an element to hold each question, handle the timer for each question, create and handle the choices for each question(inclding checking for correct or wrong answers and notifying the user) and finally handling the transition to the next question and finishing of the quizz.
+The createQuizz() function fetches and renders the data from the api and calls the createSingleQuestion() function. 
+The work of the createSingleQuestion() function is to create a container for each question, create an element to hold each question, handle the timer for each question, create and handle the choices for each question(inclding checking for correct or wrong answers and notifying the user) and finally handling the transition to the next question and finishing of the quizz.
 
-When the finish quizz button is called (this is still within the renderSingleQuetion () function), the showFinalScore () button is called. This function shows the user's total final score, the time the user has taken to answer all the questions, and the calls the createRestartButton() function.
-The work of the createRestartButton() is to create the button, and add an event listener to it which on click, resets the array of questions and calls the loadQuizz() function which restarts the whole cycle again.
+When the finish quizz button is called (this is still within the createSingleQuetion () function), the showFinalScore () button is called. This function shows the user's total final score, the time the user has taken to answer all the questions, and the calls the createRestartButton() function.
+The work of the createRestartButton() is to create the button, and add an event listener to it which on click, resets the array of questions and calls the createQuizz() function which restarts the whole cycle again.
 
 
 
