@@ -70,7 +70,27 @@ Open your terminal, and navigate to the directory where you wish to clone the re
 ![alt text](image-2.png)
 ![alt text](image-3.png)
 
-# 7. Contacts
+## 7. App logic Explanation Overview
+
+My code is in three files: the index.html file, which holds my main divs; the style.css file, which holds the styling for my app; and finally, the index.js file, which holds the logic of the app. In my index.js file, all my code is inside the DOMContentLoaded event listener. 
+
+I start off by defining my global variables, which will be used in different sections of my code. I then grab my existing div from the HTML file and store it in variables. I will append new elements I create onto this existing divs. 
+
+I have various header elements, including the title and image header
+
+Then, I create the quiz user preferences selection section 
+
+The start quizz button on click event listener is where logic begins. The start quizz on click event listener hides elements of the header section of the page and calls the loadQuizz() function. 
+
+The loadQuizz() function fetches and renders the data from the api and calls the renderSingleQuestion() function. 
+The work of the renderSingleQuestion() function is to create a container for each question, create an element to hold each question, handle the timer for each question, create and handle the choices for each question(inclding checking for correct or wrong answers and notifying the user) and finally handling the transition to the next question and finishing of the quizz.
+
+When the finish quizz button is called (this is still within the renderSingleQuetion () function), the showFinalScore () button is called. This function shows the user's total final score, the time the user has taken to answer all the questions, and the calls the createRestartButton() function.
+The work of the createRestartButton() is to create the button, and add an event listener to it which on click, resets the array of questions and calls the loadQuizz() function which restarts the whole cycle again.
+
+
+
+## 8. Contacts
   Checkout my github profile: [link]: https://github.com/jkininga
 
   Checkout my linkedn profile: [link]: https://www.linkedin.com/in/carolineininga/
@@ -78,6 +98,6 @@ Open your terminal, and navigate to the directory where you wish to clone the re
   Check out my website: [link]: https://carolineininga.com/
 
 
-# 8. License
+## 9. License
 
 This project is free to use and not restricted by a license

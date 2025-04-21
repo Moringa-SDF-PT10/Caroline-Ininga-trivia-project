@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-        let triviaQuestions = [];
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let startTime;
-        let endTime;
+    //global variables to be used throughout my code
+    let triviaQuestions = [];
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let startTime;
+    let endTime;
 
 
     //grab some existing dom elements
