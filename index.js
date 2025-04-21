@@ -227,12 +227,12 @@ document.addEventListener("DOMContentLoaded", () => {
  //function to render a single question
 
   function renderSingleQuestion(index){
-        questionDiv.innerHTML = ''; // Clear previous questions, score, buttons
+        questionDiv.innerHTML = ''; 
         const element = triviaQuestions[index]
     
         // Create a container for each question
         let questionContainer = document.createElement('div');
-        //give the container an id for styling purposes
+        //give the container a classlist for styling purposes
         questionContainer.classList.add("question-container");
 
         //create a timer element
@@ -248,6 +248,8 @@ document.addEventListener("DOMContentLoaded", () => {
             timeLeft--;
             timerDiv.innerText = `Time left: ${timeLeft} seconds` 
 
+
+            //when timer runs out, disable all answers and tell the user the time is up, and highlight the correct answer
             if (timeLeft<=0){
                 clearInterval(timer);
                 timerDiv.innerText = "Time's up! Better Luck next time"
@@ -258,31 +260,36 @@ document.addEventListener("DOMContentLoaded", () => {
                                     {
                                         answer.disabled = true;
 
-                                        if (answer.value === element.correct_answer) {
+                                        if (answer.value === decodeHTML(element.correct_answer)) {
                                             answer.parentElement.classList.add('correct-answer'); // Highlight the correct answer
                                         }
 
                                         
                                     })
             } // end of if statement for timer
+
+
         },1000); //end of setInterval function
 
         
 
-
-        //decoding 
+        //decoding html
         function decodeHTML(html) {
          const txt = document.createElement("textarea");
          txt.innerHTML = html;
          return txt.value;
      } // end of decoding
+
+
     
-        // Create, give content and append to the mother
+        // Create each question and numbering, give content and append to the mother
         let quizzQsn = document.createElement('h2');
         quizzQsn.innerText = `${index + 1}. ${decodeHTML(element.question)}`; //give numbering to each question from 1
         questionContainer.appendChild(quizzQsn);
         questionDiv.appendChild(questionContainer);
     
+
+
         // Combine correct and incorrect answers for each question
         //spread operator gives us a copy for the original array and then we add the correct answer to the array
         //we need to work with all answers both wrong and right as one
@@ -335,7 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                          // Automatically highlight the correct answer
                                          const allAnswers = document.querySelectorAll(`input[name="question-${index}"]`);
                                          allAnswers.forEach(answer => {
-                                             if (answer.value === element.correct_answer) {
+                                             if (answer.value === decodeHTML(element.correct_answer)) {
                                                  answer.parentElement.classList.add('correct-answer'); // Highlight the correct answer
                                              }
                                          });
