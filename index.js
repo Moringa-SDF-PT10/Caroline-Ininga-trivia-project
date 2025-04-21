@@ -377,7 +377,8 @@ document.addEventListener("DOMContentLoaded", () => {
      const nextBtn = document.createElement('button');
      nextBtn.innerText = (index === triviaQuestions.length - 1) ? "Finish Quiz" : "Next Question";
      nextBtn.disabled = true; 
-     nextBtn.id = "nextBtn";
+     nextBtn.classList.add("bottonStyling");
+     
      questionContainer.appendChild(nextBtn);
  
      nextBtn.addEventListener('click', () => {
