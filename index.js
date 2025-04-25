@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-
+   
 
 
 
@@ -204,11 +204,11 @@ document.addEventListener("DOMContentLoaded", () => {
        
         questionDiv.innerHTML = ''; 
         //grab the selected user options
-
         const amount = document.getElementById("noOfQsns").value;
         const dLevel = document.getElementById("diffLevel").value;
         const cat = document.getElementById("cat").value;
         const typeOfQns = document.getElementById("type").value;
+      
 
 
         fetch(`https://opentdb.com/api.php?amount=${amount}&category=${cat}&difficulty=${dLevel}&type=${typeOfQns}`)
@@ -236,11 +236,28 @@ document.addEventListener("DOMContentLoaded", () => {
         //give the container a classlist for styling purposes
         questionContainer.classList.add("question-container");
 
+        const topBar = document.createElement("div");
+        topBar.style.overflow = "auto";
+        topBar.style.width = "37%";         // Centered size
+        topBar.style.margin = "0 auto";     // Center it horizontally
+         // Clear floats
+        topBar.style.marginBottom = "10px";
+        questionDiv.appendChild(topBar);
+
+
         //create a timer element
         const timerDiv = document.createElement('div');
         timerDiv.id = 'timer';
         timerDiv.innerText = "Time Left: 15 seconds";
-        questionDiv.appendChild(timerDiv);
+        topBar.appendChild(timerDiv);
+        timerDiv.style.float = "right";
+
+        //create a question counter 
+        const qsnNumberDiv = document.createElement("div")
+        qsnNumberDiv.id = "qnNumber";
+        qsnNumberDiv.innerText = `Question ${index + 1} out of ${triviaQuestions.length}`;
+        topBar.appendChild(qsnNumberDiv);
+        qsnNumberDiv.style.float = "left";
 
 
         //create a timer for each question
@@ -379,8 +396,19 @@ document.addEventListener("DOMContentLoaded", () => {
      nextBtn.innerText = (index === triviaQuestions.length - 1) ? "Finish Quiz" : "Next Question";
      nextBtn.disabled = true; 
      nextBtn.classList.add("bottonStyling");
-     
+
+     //conditionally style next and finish buttons
+     if(index === triviaQuestions.length - 1){
+        nextBtn.classList.add("finishStyling")
+     }
+     else{
+        nextBtn.classList.add("nextStyling")
+     }
+
+
      questionContainer.appendChild(nextBtn);
+
+
  
      nextBtn.addEventListener('click', () => {
         if (index < triviaQuestions.length - 1) {

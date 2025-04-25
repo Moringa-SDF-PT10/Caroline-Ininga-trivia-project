@@ -48,7 +48,9 @@ select {
 }
 
 .bottonStyling {
-    background-color: #bfa164;
+    color: #2a2a2a;
+    color: #2a2a2a;
+    background-color: #2e2e2e ;
     color: #fff;
     padding: 18px 70px;
     border: none;
@@ -60,7 +62,7 @@ select {
 }
 
 .bottonStyling:hover {
-    background-color: #a88c54;
+    background-color: #000000;
 }
 
 #questionsSection {
@@ -135,6 +137,16 @@ select {
     font-size: 1.2rem;
     margin-bottom: 20px;
     color: #0b0901;
+    /* float: right; */
+    
+}
+
+#qnNumber{
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #0b0901;
+    /* float: left; */
+    
 }
 
 @keyframes fadeIn {
@@ -182,3 +194,14 @@ select:focus {
 select:hover {
     background-color: #eaeaea;
 }
+
+.nextStyling::after {
+    content: " →";
+    margin-left: 6px;
+    font-weight: bold;
+    font-weight: 900;
+    transition: transform 0.3s ease;
+  }
+  .nextStyling:hover::after {
+    transform: translateX(4px); /* adds a nice little motion on hover */
+  }
